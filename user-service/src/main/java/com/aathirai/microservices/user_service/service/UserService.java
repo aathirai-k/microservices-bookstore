@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class UserService {
 
@@ -24,6 +26,7 @@ public class UserService {
         u.setUsername(req.getUsername());
         u.setEmail(req.getEmail());
         u.setPassword(encoder.encode(req.getPassword()));
+        u.setRoles(Set.of("USER"));
         return repo.save(u);
     }
 

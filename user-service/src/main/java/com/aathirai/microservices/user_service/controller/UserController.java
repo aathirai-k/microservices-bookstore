@@ -6,11 +6,9 @@ import com.aathirai.microservices.user_service.dto.RegisterRequest;
 import com.aathirai.microservices.user_service.entity.User;
 import com.aathirai.microservices.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -25,6 +23,11 @@ public class UserController {
         this.service = service;
         this.jwtUtil = jwtUtil;
         this.encoder = encoder;
+    }
+
+    @GetMapping("/profile")
+    public User getProfile(Authentication authentication) {
+        return (User) authentication.getPrincipal();
     }
 
     @PostMapping("/register")
